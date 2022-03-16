@@ -5,22 +5,14 @@ from resources.store import Store, StoreList
 from resources.user import Auth, UserRegister
 from resources.item import Items, ItemList
 from datetime import timedelta
-from db import db
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///data.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = "smsrn123"  # Change this!
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=5)
-db.init_app(app)
 # app.secret_key = 'smsrn123'
 api = Api(app)
-
-
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
 
 jwt = JWTManager(app)  # , authenticate, identity)  # /auth
 
